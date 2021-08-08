@@ -1,0 +1,273 @@
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+//名前を格納するvectorを科目ごとに作成する。
+vector <string> NJ;
+vector <string> NM;
+vector <string> NE;
+
+//得点を格納するvectorを科目ごとに作成する。
+vector <int> SJ;
+vector <int> SM;
+vector <int> SE;
+
+
+//名前と得点を登録し、得点の降順に並べ替えるためのクラスを作成する。
+struct Ranking {
+	string name;
+	int score;
+
+	Ranking(std::string inputted_name, int inputted_score) {
+		name = inputted_name;
+		score = inputted_score;
+	}
+	bool operator <(const Ranking& another) const {
+		return score > another.score;
+	};
+
+};
+
+
+//問題用の関数を作成する。
+void Question() {
+
+	printf("受験したい教科の番号を入力してください。\n1.国語 2.数学 3.英語 \n");
+	string str;
+	cin >> str;
+
+	//国語の問題を作成する。
+	if (str == "1") {
+		cout << "\n" << endl;
+		printf("国語の問題を始めます。\n");
+		cout << "\n" << endl;
+		printf("名前を入力してください。\n");
+		string str;
+		cin >> str;
+		NJ.push_back(str);
+
+		//国語問題文
+		vector <string> v1{
+		"問題1．丹念の読み方は次のうちどれ？ １.はんねん　２.たんねん　３.ざんねん　４.かんねん" ,
+	    "問題2．弄ぶの読み方は次のうちどれ？ １.もてあそぶ　２.よろこぶ　３.ほころぶ　４.ころぶ" ,
+		"問題3. 遡るの読み方は次のうちどれ？ １．ほうむる　２．はびこる　３．こうむる　４．さかのぼる",
+		"問題4．弔うの読み方は次のうちどれ？ １．ともらう　２．とむらう　３．のろう　４．うかがう",
+		"問題5．一坪の読み方は次のうちどれ？ １．いっしょう　２．ひとかぶ　３．いっこく　４．ひとつぼ",
+		"問題6. 次の空欄に当てはまる漢字はどれ？ 異□同音 １．句　２．耳　３．口　４．心",
+		"問題7．次の空欄に当てはまる漢字はどれ？ 馬耳東□ １．音　２．風　３．西　４．鼻",
+		"問題8．次の空欄に当てはまる漢字はどれ？ 一□一夕 １．朝　２．時　３．刻　４．夜",
+		"問題9．次の空欄に当てはまる漢字はどれ？ 呉越同□ １．戦　２．車　３．舟　４．思",
+		"問題10．次の空欄に当てはまる漢字はどれ？ 自□自得 １．業　２．給　３．損　４．益"
+		};
+
+		int score = 0;
+
+		//国語解答
+		vector <int> v2{ 2,1,4,2,4,3,2,1,3,1 };
+
+		for (int n = 0; n < 10; ++n) {
+			cout << v1[n] << endl;
+
+			int x;
+			cin >> x;
+
+			if (x == v2[n]) {
+				printf("〇");
+				score++;
+			}
+
+			else {
+				printf("×");
+			}
+
+			cout <<"\n"<< endl;
+			
+		}
+
+		cout << "得点：" << score << endl;
+		SJ.push_back(score);
+
+		cout << "\n" << endl;
+	}
+
+	//数学の問題を作成する。
+	else if (str == "2") {
+		cout << "\n" << endl;
+		printf("数学の問題を始めます。\n");
+		cout << "\n" << endl;
+		printf("名前を入力してください。\n");
+		string str;
+		cin >> str;
+		NM.push_back(str);
+
+		//数学問題文
+		vector <string> v3{
+		"問題1．-1+3-5-(-3)=？ " ,
+		"問題2．12+(-3)*5+6=？",
+		"問題3. (-3)^2=？",
+		"問題4．-3^2+8*2=？",
+		"問題5．(-1)^11=？",
+		"問題6. |-2|*(-3)^2-|-10|=？",
+		"問題7．方程式 x+3=10 の解を求めよ",
+		"問題8．方程式 3x+5*(-4)=x-8 の解を求めよ",
+		"問題9．a=2のとき3a-8+a^2+4=？",
+		"問題10．1から30までの間に素数はいくつあるか？"
+		};
+
+		int score = 0;
+
+		//数学解答
+		vector <int> v4{ 6,3,9,7,-1,8,7,6,6,25 };
+
+		for (int n = 0; n < 10; ++n) {
+			cout << v3[n] << endl;
+
+			int x;
+			cin >> x;
+
+			if (x == v4[n]) {
+				printf("〇");
+				score++;
+			}
+
+			else {
+				printf("×");
+			}
+
+			cout << "\n" << endl;
+
+		}
+
+		cout << "得点：" << score << endl;
+		SM.push_back(score);
+
+		cout << "\n" << endl;
+	}
+
+
+	//英語の問題を作成する。
+	else if (str == "3") {
+		cout << "\n" << endl;
+		printf("英語の問題を始めます。\n");
+		cout << "\n" << endl;
+		printf("名前を入力してください。\n");
+		string str;
+		cin >> str;
+		NE.push_back(str);
+
+		//英語問題文
+		vector <string> v5{
+		"問題1．次の単語の意味はどれ？ careful １．注意深い　２．感慨深い　３．元気な　４．豊かな " ,
+		"問題2．次の単語の意味はどれ？ famous １．人気のある　２．大きな　３．有名な　４．元気な",
+		"問題3. 次の単語の意味はどれ？ grow １．埋める　２．成長する　３．与える　４．笑う",
+		"問題4．正しいつづりは次のうちどれ？ １．yelou　２．iellow　３．yellow　４．yelow",
+		"問題5．正しいつづりは次のうちどれ？ １．important　２．inportant　３．inportamt　４．importamt",
+		"問題6. 正しいつづりは次のうちどれ？ １．umblera　２．umbrella　３．umblerra　４．umbrela",
+		"問題7．次の熟語の意味はどれ？ be interested in １．～に興奮する　２．～に興味がある　３．～に馴染みのある　４．～に関係している",
+		"問題8．次の熟語の意味はどれ？ between A and B １．AとBの半分　２．AとBを足して　３．AとBの間　４．AとBの両方",
+		"問題9．次の熟語の意味はどれ？ depend on １．～に乗る　２．～を独占する　３．～を使う　４．～に依存する",
+		"問題10．toothの複数形は次のうちどれ？ １．toothes　２．tooths　３．tooth　４．teeth"
+		};
+
+		int score = 0;
+
+		//英語解答
+		vector <int> v6{1,3,2,3,1,2,2,3,4,4};
+
+		for (int n = 0; n < 10; ++n) {
+			cout << v5[n] << endl;
+
+			int x;
+			cin >> x;
+
+			if (x == v6[n]) {
+				printf("〇");
+				score++;
+			}
+
+			else {
+				printf("×");
+			}
+
+			cout << "\n" << endl;
+
+		}
+
+		cout << "得点：" << score << endl;
+		SE.push_back(score);
+
+		cout << "\n" << endl;
+	}
+
+
+
+	//指定されていない番号を選ばなかった場合終了する。
+	else if ((str != "1") && (str != "2") && (str != "3")) {
+		printf("教科の番号は1～5から選んでください。\n");
+	}
+
+	
+}
+
+
+
+int main() {
+	//試験をする。
+	for (int i = 0; i < 30; ++i) {
+		Question();
+	}
+
+	string name;
+	int score;
+
+	//クラスRankingをもとに成績をvectorに格納する。
+	vector<Ranking> Japanese;
+	vector<Ranking> Mathematics;
+	vector<Ranking> English;
+	
+
+	for (int n = 0; n < NJ.size(); ++n) {
+		Japanese.push_back(Ranking(NJ[n], SJ[n]));
+
+	}
+
+	sort(Japanese.begin(), Japanese.end());
+	cout << "\n" << endl;
+	cout << "国語成績" << endl;
+
+	for (auto& itr : Japanese) {
+		cout << "氏名：" << itr.name << "　得点：" << itr.score << endl;
+	}
+
+	for (int n = 0; n < NM.size(); ++n) {
+		Mathematics.push_back(Ranking(NM[n], SM[n]));
+
+	}
+
+	sort(Mathematics.begin(), Mathematics.end());
+	cout << "\n" << endl;
+	cout << "数学成績" << endl;
+
+	for (auto& itr : Mathematics) {
+		cout << "氏名：" << itr.name << "　得点：" << itr.score << endl;
+	}
+
+	for (int n = 0; n < NE.size(); ++n) {
+		English.push_back(Ranking(NE[n], SE[n]));
+
+	}
+
+	sort(English.begin(), English.end());
+	cout << "\n" << endl;
+	cout << "英語成績" << endl;
+
+	for (auto& itr : English) {
+		cout << "氏名：" << itr.name << "　得点：" << itr.score << endl;
+	}
+
+
+}
